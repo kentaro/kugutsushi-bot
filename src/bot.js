@@ -14,6 +14,7 @@ const client = new Client({
 // 環境変数から設定を読み込み
 const WEBHOOK_URL = process.env.WEBHOOK_URL;
 const ALLOWED_CHANNEL_ID = process.env.ALLOWED_CHANNEL_ID;
+const ALLOWED_USERNAME = process.env.ALLOWED_USERNAME;
 
 // メッセージをコマンドとメッセージに分解する関数
 const parseMessage = (content) => {
@@ -42,8 +43,8 @@ client.on('messageCreate', async message => {
   if (message.author.bot) return;
   // 2. 指定されたチャンネル以外
   if (message.channelId !== ALLOWED_CHANNEL_ID) return;
-  // 3. 特定のユーザー（anchipo）以外
-  if (message.author.username !== 'anchipo') return;
+  // 3. 特定のユーザー以外
+  if (message.author.username !== ALLOWED_USERNAME) return;
   
   // メッセージがボットへのメンションまたはリプライかチェック
   const isMention = message.mentions.has(client.user.id);
