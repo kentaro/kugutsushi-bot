@@ -20,18 +20,21 @@ const ALLOWED_USERNAME = process.env.ALLOWED_USERNAME;
 const parseMessage = (content) => {
   // メンション部分を削除してから処理
   const cleanContent = content.replace(/^<@.+>\s*/g, '').trim();
-  const parts = cleanContent.split(/\s+/);
   
-  // 2つ以上の部分がある場合はコマンドとメッセージ、そうでない場合はメッセージのみ
-  if (parts.length > 1) {
+  // 最初のスペースの位置を見つける
+  const firstSpaceIndex = cleanContent.indexOf(' ');
+  
+  // スペースが見つかった場合はコマンドとメッセージに分割
+  if (firstSpaceIndex !== -1) {
     return {
-      command: parts[0],
-      content: parts.slice(1).join(' ')
+      command: cleanContent.slice(0, firstSpaceIndex),
+      content: cleanContent.slice(firstSpaceIndex + 1).trim()
     };
   }
   
+  // スペースが見つからない場合は全体をmessageコマンドとして扱う
   return {
-    command: "message",
+    command: 'message',
     content: cleanContent
   };
 };
@@ -45,7 +48,7 @@ client.on('messageCreate', async message => {
   if (message.channelId !== ALLOWED_CHANNEL_ID) return;
   // 3. 特定のユーザー以外
   if (message.author.username !== ALLOWED_USERNAME) return;
-  
+
   // メッセージがボットへのメンションまたはリプライかチェック
   const isMention = message.mentions.has(client.user.id);
   const isReplyToMe = message.reference && (await message.fetchReference()).author.id === client.user.id;
