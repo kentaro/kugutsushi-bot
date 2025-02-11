@@ -45,9 +45,9 @@ client.on('messageCreate', async message => {
   // 1. ボットからのメッセージ
   if (message.author.bot) return;
   // 2. 指定されたチャンネル以外
-  if (message.channelId !== ALLOWED_CHANNEL_ID) return;
+  // if (message.channelId !== ALLOWED_CHANNEL_ID) return;
   // 3. 特定のユーザー以外
-  if (message.author.username !== ALLOWED_USERNAME) return;
+  // if (message.author.username !== ALLOWED_USERNAME) return;
 
   // メッセージがボットへのメンションまたはリプライかチェック
   const isMention = message.mentions.has(client.user.id);

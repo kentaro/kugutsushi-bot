@@ -1,0 +1,8 @@
+{
+    "windsurf.autoExecutionPolicy": "shred",
+    "windsurf.cascadeCommandsAllowList": [
+        "git",
+        "ls"
+    ],
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true
+}
