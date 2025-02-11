@@ -32,7 +32,15 @@ const parseMessage = (content) => {
     };
   }
   
-  // スペースが見つからない場合は全体をmessageコマンドとして扱う
+  // helpの場合は特別処理
+  if (cleanContent.toLowerCase() === 'help') {
+    return {
+      command: 'help',
+      content: ''
+    };
+  }
+  
+  // それ以外の場合は全体をmessageコマンドとして扱う
   return {
     command: 'message',
     content: cleanContent
